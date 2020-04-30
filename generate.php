@@ -4,20 +4,20 @@ include "database.php";
 require('fpdf.php');
 // intance object dan memberikan pengaturan halaman PDF
 $pdf = new FPDF('P','mm','A4');
-$pdf->SetLeftMargin(20);
+$pdf->SetLeftMargin(19);
 // membuat halaman baru
 $pdf->AddPage();
 // setting jenis font yang akan digunakan
 $pdf->SetFont('times','B',11);
 // mencetak string 
 $pdf->Cell(190,5,'PEMERINTAH PROVINSI JAWA TENGAH',0,1,'C');
-$pdf->Image('images/logo-jateng.png',8,10,25,25);
+$pdf->Image('images/logo-jateng.png',12,10,30,30);
 $pdf->Cell(190,5,'DINAS PENDIDIKAN DAN KEBUDAYAAN',0,1,'C');
 $pdf->SetFont('times','B',16);
 $pdf->Cell(190,7,'SEKOLAH MENENGAH ATAS NEGERI 1 COMAL',0,1,'C');
 $pdf->SetFont('times','',9);
-$pdf->Cell(190,7,'Jalan Jendral Ahmad Yani Nomor 77, Pemalang Kode Pos 52363 Telepon 0285 577190',0,1,'C');
-$pdf->Cell(190,2,'Surat Elektronik smanegeri_1comal@yahoo.co.id Website:http://sman1comal.sch.id/',0,1,'C');
+$pdf->Cell(190,7,'Jalan Jendral Ahmad Yani Nomor 77 Comal, Pemalang Kode Pos 52363',0,1,'C');
+$pdf->Cell(190,2,'Telp : 0285 577190 Surat Elektronik smanegeri_1comal@yahoo.co.id',0,1,'C');
 $pdf->Line(20, 40, 210-20, 40);
 $pdf->SetFont('times','U',16);
 $pdf->Cell(190,30,'SURAT KETERANGAN',0,1,'C');
@@ -53,7 +53,23 @@ while ($row = mysqli_fetch_array($hasil)){
     $pdf->Cell(28,45,':',0,0,'R');
     $pdf->Cell(15,45,$row['tempat_lahir'],0,0);
     $pdf->Cell(2,45,',',0,0,'R');
-    $pdf->Cell(27,45,$row['tanggal_lahir'],0,1,'L');
+    $tanggal_subs = substr($row['tanggal_lahir'],0,2);
+    $bulan_subs = substr($row['tanggal_lahir'],3,2);
+    $tahun_subs = substr($row['tanggal_lahir'],6,4);
+    $bulan = array (1 =>   'Januari',
+			'Februari',
+			'Maret',
+			'April',
+			'Mei',
+			'Juni',
+			'Juli',
+			'Agustus',
+			'September',
+			'Oktober',
+			'November',
+			'Desember'
+        );
+    $pdf->Cell(27,45,$tanggal_subs.' '.$bulan[$bulan_subs].' '.$tahun_subs,0,1,'L');
     $pdf->Cell(20,-35,'No. Peserta',0,0);
     $pdf->Cell(28,-35,':',0,0,'R');
     $pdf->Cell(27,-35,$row['no_ujian'],0,1);
@@ -115,8 +131,8 @@ $pdf->Cell(190,5,'DINAS PENDIDIKAN DAN KEBUDAYAAN',0,1,'C');
 $pdf->SetFont('times','B',10);
 $pdf->Cell(190,7,'SEKOLAH MENENGAH ATAS NEGERI 1 COMAL',0,1,'C');
 $pdf->SetFont('times','',8);
-$pdf->Cell(190,7,'Jalan Jendral Ahmad Yani Nomor 77, Pemalang Kode Pos 52363 Telepon 0285 577190',0,1,'C');
-$pdf->Cell(190,2,'Surat Elektronik smanegeri_1comal@yahoo.co.id Website:http://sman1comal.sch.id/',0,1,'C');
+$pdf->Cell(190,7,'Jalan Jendral Ahmad Yani Nomor 77 Comal, Pemalang Kode Pos 52363',0,1,'C');
+$pdf->Cell(190,2,'Telp : 0285 577190 Surat Elektronik smanegeri_1comal@yahoo.co.id',0,1,'C');
 $pdf->Line(20, 40, 216-20, 40);
 $pdf->Cell(190,5,'',0,1,'C');
 
@@ -139,7 +155,7 @@ while ($row = mysqli_fetch_array($hasil)){
     $pdf->Cell(190,4,'TAHUN PELAJARAN 2019/2020',0,1,'C');
     $pdf->Cell(150,4,'',0,1);
     $pdf->SetFont('times','',8);
-    $pdf->Cell(150,5,'Yang bertanda tangan di bawah ini, Kepala Sekolah Menengah Atas Negeri 1 Comal KabupatenPemalang, Provinsi Jawa Tengah menerangkan bahwa :',0,1);
+    $pdf->Cell(150,5,'Yang bertanda tangan di bawah ini, Kepala Sekolah Menengah Atas Negeri 1 Comal Kabupaten Pemalang, Provinsi Jawa Tengah menerangkan bahwa :',0,1);
     $pdf->Cell(50,4,'Nama',0,0);
     $pdf->Cell(28,4,':',0,0,'R');
     $pdf->Cell(27,4,$row['nama'],0,1);
@@ -147,7 +163,23 @@ while ($row = mysqli_fetch_array($hasil)){
     $pdf->Cell(28,2,':',0,0,'R');
     $pdf->Cell(12,2,$row['tempat_lahir'],0,0);
     $pdf->Cell(2,2,',',0,0,'R');
-    $pdf->Cell(20,2,$row['tanggal_lahir'],0,1,'L');
+    $tanggal_subs = substr($row['tanggal_lahir'],0,2);
+    $bulan_subs = substr($row['tanggal_lahir'],3,2);
+    $tahun_subs = substr($row['tanggal_lahir'],6,4);
+    $bulan = array (1 =>   'Januari',
+			'Februari',
+			'Maret',
+			'April',
+			'Mei',
+			'Juni',
+			'Juli',
+			'Agustus',
+			'September',
+			'Oktober',
+			'November',
+			'Desember'
+        );
+    $pdf->Cell(20,2,$tanggal_subs.' '.$bulan[$bulan_subs].' '.$tahun_subs,0,1,'L');
     $pdf->Cell(50,4,'Nama Orang Tua / Wali',0,0);
     $pdf->Cell(28,4,':',0,0,'R');
     $pdf->Cell(27,4,$row['nama_orangtua'],0,1);
@@ -173,7 +205,7 @@ while ($row = mysqli_fetch_array($hasil)){
 
     $pdf->SetFont('times','B',8); 
     $pdf->Cell(10,5,'No',1,0, 'C');
-    $pdf->Cell(110,5,'Mata Pelajaran (Kurikulum 2013)',1,0,'C');
+    $pdf->Cell(110,5,'Mata Pelajaran',1,0,'C');
     $pdf->Cell(40,5,'Nilai Ujian Sekolah',1,1, 'C');
     $pdf->Cell(160,1,'',1,1);
 
@@ -246,7 +278,9 @@ while ($row = mysqli_fetch_array($hasil)){
                 $pdf->Cell(110,4,'Geografi',1,0);
                 $pdf->Cell(40,4,$row['n_uas_minat_c'],1,1, 'C');
             }
-            
+            $pdf->Cell(10,4,'',1,0, 'C');
+            $pdf->Cell(110,4,'........................................',1,0);
+            $pdf->Cell(40,4,'',1,1, 'C');
         }elseif($row['deskripsi_jurusan'] == 'PEMINATAN ILMU PENGETAHUAN SOSIAL'){
             $pdf->Cell(10,4,'1',1,0, 'C');
             $pdf->Cell(110,4,'Geografi',1,0);
@@ -313,8 +347,7 @@ $pdf->Image('images/stempel.png',80,200,50,40);
     $pdf->Cell(100,-42,'',0,0);
     $pdf->Cell(100,-42,'Drs. Murhono, M.Pd',0,1);
 }
-$pdf->Cell(190,2,'',0,1);
-$pdf->Cell(190,55,'SMA NEGERI 1 COMAL / 20324218',0,1);
+$pdf->Cell(190,55,'SMA / 20324218',0,1);
 
 $pdf->Output();
 ?>
